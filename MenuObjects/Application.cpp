@@ -9,7 +9,7 @@ Application::Application():
 {
 	mFont.loadFromFile( "../Resources/Fonts/LinLibertine_DRah.ttf" );
 
-	mBar.setSize( sf::Vector2f( 200, 40 ) );
+	mBar.setSize( sf::Vector2f( 200, 20 ) );
 	mBar.setOutlineThickness( 5.f );
 
 	mBar.setBackgroundColor( sf::Color( 220, 220, 220 ) );
@@ -18,6 +18,7 @@ Application::Application():
 	mBar.setTextColor( sf::Color::Red );
 
 	mBar.setFont( mFont );
+	mBar.showText( true );
 
 	mBar.setPosition( ( mWindow.getDefaultView().getSize() / 2.f ) - sf::Vector2f( 200, 10 ) / 2.f );
 }
@@ -75,11 +76,11 @@ void Application::handleEvents( const sf::Event& ev )
 		switch( ev.key.code )
 		{
 		case sf::Keyboard::Right:
-			mBar.increase( 0.10f );
+			mBar.increase( 0.001f );
 			break;
 
 		case sf::Keyboard::Left:
-			mBar.increase( -0.10f );
+			mBar.increase( -0.001f );
 			break;
 
 		case sf::Keyboard::Num0:

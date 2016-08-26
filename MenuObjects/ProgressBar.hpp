@@ -24,6 +24,7 @@ public:
 	void setCompletion( const float value );
 	void increase( const float value );
 	
+	void showText( const bool isShown );
 	float getCompletion() const;
 
 private:

@@ -11,9 +11,10 @@ ProgressBar::ProgressBar():
 void ProgressBar::setFont( const sf::Font& font )
 {
 	mPercentageText.setFont( font );
-	mShowPercentage = true;
+	mPercentageText.setString( "0.00 %" );
 
-	updateText();
+	sf::FloatRect textBounds{ mPercentageText.getLocalBounds() };
+	mPercentageText.setScale( mBackgroundBar.getSize().y / textBounds.height * 2.f / 3.f, mBackgroundBar.getSize().y / textBounds.height * 2.f / 3.f );
 }
 
 void ProgressBar::setSize( const sf::Vector2f size )
@@ -52,7 +53,6 @@ void ProgressBar::setCompletion( const float value )
 	mCompletionPercentage = std::min( 1.f, std::max( mCompletionPercentage, 0.f ) );
 
 	mFillBar.setSize( sf::Vector2f( mBackgroundBar.getSize().x * mCompletionPercentage, mBackgroundBar.getSize().y ) );
-
 	updateText();
 }
 
@@ -63,6 +63,11 @@ void ProgressBar::increase( const float value )
 
 	mFillBar.setSize( sf::Vector2f( mBackgroundBar.getSize().x * mCompletionPercentage, mBackgroundBar.getSize().y ) );
 	updateText();
+}
+
+void ProgressBar::showText( const bool isShown )
+{
+	mShowPercentage = isShown;
 }
 
 float ProgressBar::getCompletion() const
@@ -88,8 +93,9 @@ void ProgressBar::draw( sf::RenderTarget& target, sf::RenderStates states ) cons
 
 void ProgressBar::updateText()
 {
-	sf::FloatRect textBounds{ mPercentageText.getLocalBounds() };
-
-	mPercentageText.setString( toString( mCompletionPercentage * 100.f ) + " %" );
-	mPercentageText.setScale( mBackgroundBar.getSize().y / textBounds.height * 2.f/3.f, mBackgroundBar.getSize().y / textBounds.height * 2.f / 3.f );
+	if( mShowPercentage )
+	{
+		const float percent{ mCompletionPercentage * 100.f };
+		mPercentageText.setString( toString( floor( percent * 100 ) / 100 ) + " %" );
+	}
 }
