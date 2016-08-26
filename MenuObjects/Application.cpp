@@ -5,10 +5,17 @@
 const sf::Time Application::TimePerFrame{ sf::seconds( 1.f / 60.f ) };
 
 Application::Application():
-	mWindow{ sf::VideoMode( 640, 480 ), "Menu-Objects", sf::Style::Close },
-	mShape{ 100.f }
+	mWindow{ sf::VideoMode( 640, 480 ), "Menu-Objects", sf::Style::Close }
 {
-	mShape.setFillColor( sf::Color::Green );
+
+	mBar.setSize( sf::Vector2f( 200, 10 ) );
+	mBar.setOutlineThickness( 5.f );
+
+	mBar.setBackgroundColor( sf::Color( 220, 220, 220 ) );
+	mBar.setOutlineColor( sf::Color( 128, 128, 128 ) );
+	mBar.setFillColor( sf::Color::Green );
+
+	mBar.setPosition( ( mWindow.getDefaultView().getSize() / 2.f ) - sf::Vector2f( 200, 10 ) / 2.f );
 }
 
 void Application::run()
@@ -40,6 +47,17 @@ void Application::processInput()
 	{
 		if( ev.type == sf::Event::Closed )
 			mWindow.close();
+
+		switch( ev.type )
+		{
+		case sf::Event::KeyPressed:
+		{
+			if( ev.key.code == sf::Keyboard::Right )
+				mBar.increase( 0.10f );
+			else if ( ev.key.code == sf::Keyboard::Left )
+				mBar.increase( -0.10f );
+		}
+		}
 	}
 }
 
@@ -51,7 +69,7 @@ void Application::render()
 {
 	mWindow.clear();
 
-	mWindow.draw( mShape );
+	mWindow.draw( mBar );
 
 	mWindow.display();
 }

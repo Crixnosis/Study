@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ProgressBar.hpp"
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
@@ -16,6 +18,8 @@ private:
 
 private:
 	static const sf::Time TimePerFrame;
+	
 	sf::RenderWindow mWindow;
-	sf::CircleShape mShape;
+	
+	ProgressBar mBar;
 };
