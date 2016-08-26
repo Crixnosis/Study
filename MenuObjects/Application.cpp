@@ -5,22 +5,16 @@
 const sf::Time Application::TimePerFrame{ sf::seconds( 1.f / 60.f ) };
 
 Application::Application():
-	mWindow{ sf::VideoMode( 640, 480 ), "Menu-Objects", sf::Style::Close }
+	mWindow{ sf::VideoMode( 640, 480 ), "Menu-Objects", sf::Style::Close },
+	mBar{ sf::Vector2f( 200, 20 ) }
 {
 	mFont.loadFromFile( "../Resources/Fonts/LinLibertine_DRah.ttf" );
 
-	mBar.setSize( sf::Vector2f( 200, 20 ) );
-	mBar.setOutlineThickness( 5.f );
+	mBar.setBarColors( sf::Color( 220, 220, 220 ), sf::Color::Green );
+	mBar.setOutline( 5.f, sf::Color( 128, 128, 128 ) );
+	mBar.setText( mFont, sf::Color::Red );
 
-	mBar.setBackgroundColor( sf::Color( 220, 220, 220 ) );
-	mBar.setOutlineColor( sf::Color( 128, 128, 128 ) );
-	mBar.setFillColor( sf::Color::Green );
-	mBar.setTextColor( sf::Color::Red );
-
-	mBar.setFont( mFont );
-	mBar.showText( true );
-
-	mBar.setPosition( ( mWindow.getDefaultView().getSize() / 2.f ) - sf::Vector2f( 200, 10 ) / 2.f );
+	mBar.setPosition( ( mWindow.getDefaultView().getSize() / 2.f ) - sf::Vector2f( 200, 20 ) / 2.f );
 }
 
 void Application::run()

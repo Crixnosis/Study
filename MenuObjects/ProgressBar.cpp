@@ -2,19 +2,42 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-ProgressBar::ProgressBar():
-	mCompletionPercentage{ 0.f },
-	mShowPercentage{ false }
+ProgressBar::ProgressBar()
 {
+	// Default Size and Default Colors
+	setSize( sf::Vector2f( 200, 10 ) );
+	setBarColors( sf::Color::White, sf::Color::Green );
 }
 
-void ProgressBar::setFont( const sf::Font& font )
+ProgressBar::ProgressBar( const sf::Vector2f size )
+{
+	setSize( size );
+	setBarColors( sf::Color::White, sf::Color::Green );
+}
+
+void ProgressBar::setText( const sf::Font& font, const sf::Color color )
 {
 	mPercentageText.setFont( font );
+	mPercentageText.setColor( color );
+
 	mPercentageText.setString( "0.00 %" );
 
 	sf::FloatRect textBounds{ mPercentageText.getLocalBounds() };
 	mPercentageText.setScale( mBackgroundBar.getSize().y / textBounds.height * 2.f / 3.f, mBackgroundBar.getSize().y / textBounds.height * 2.f / 3.f );
+
+	mShowPercentage = true;
+}
+
+void ProgressBar::setOutline( const float thickness, const sf::Color color )
+{
+	setOutlineThickness( thickness );
+	setOutlineColor( color );
+}
+
+void ProgressBar::setBarColors( const sf::Color background, const sf::Color fill )
+{
+	setBackgroundColor( background );
+	setFillColor( fill );
 }
 
 void ProgressBar::setSize( const sf::Vector2f size )
@@ -27,14 +50,14 @@ void ProgressBar::setOutlineThickness( const float thickness )
 	mBackgroundBar.setOutlineThickness( thickness );
 }
 
+void ProgressBar::setTextColor( const sf::Color color )
+{
+	mPercentageText.setColor( color );
+}
+
 void ProgressBar::setFillColor( const sf::Color color )
 {
 	mFillBar.setFillColor( color );
-}
-
-void ProgressBar::setBackgroundColor( const sf::Color color )
-{
-	mBackgroundBar.setFillColor( color );
 }
 
 void ProgressBar::setOutlineColor( const sf::Color color )
@@ -42,9 +65,9 @@ void ProgressBar::setOutlineColor( const sf::Color color )
 	mBackgroundBar.setOutlineColor( color );
 }
 
-void ProgressBar::setTextColor( const sf::Color color )
+void ProgressBar::setBackgroundColor( const sf::Color color )
 {
-	mPercentageText.setColor( color );
+	mBackgroundBar.setFillColor( color );
 }
 
 void ProgressBar::setCompletion( const float value )
@@ -63,11 +86,6 @@ void ProgressBar::increase( const float value )
 
 	mFillBar.setSize( sf::Vector2f( mBackgroundBar.getSize().x * mCompletionPercentage, mBackgroundBar.getSize().y ) );
 	updateText();
-}
-
-void ProgressBar::showText( const bool isShown )
-{
-	mShowPercentage = isShown;
 }
 
 float ProgressBar::getCompletion() const
