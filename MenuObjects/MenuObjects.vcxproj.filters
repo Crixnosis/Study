@@ -32,5 +32,8 @@
     <ClInclude Include="ProgressBar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

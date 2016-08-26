@@ -16,10 +16,13 @@ private:
 	void update( const sf::Time dt );
 	void render();
 
+	void handleEvents( const sf::Event& ev );
+
 private:
 	static const sf::Time TimePerFrame;
 	
 	sf::RenderWindow mWindow;
 	
+	sf::Font mFont;
 	ProgressBar mBar;
 };

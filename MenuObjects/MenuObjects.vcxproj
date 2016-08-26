@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="ProgressBar.hpp" />
+    <ClInclude Include="Utility.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,13 +7,17 @@ const sf::Time Application::TimePerFrame{ sf::seconds( 1.f / 60.f ) };
 Application::Application():
 	mWindow{ sf::VideoMode( 640, 480 ), "Menu-Objects", sf::Style::Close }
 {
+	mFont.loadFromFile( "../Resources/Fonts/LinLibertine_DRah.ttf" );
 
-	mBar.setSize( sf::Vector2f( 200, 10 ) );
+	mBar.setSize( sf::Vector2f( 200, 40 ) );
 	mBar.setOutlineThickness( 5.f );
 
 	mBar.setBackgroundColor( sf::Color( 220, 220, 220 ) );
 	mBar.setOutlineColor( sf::Color( 128, 128, 128 ) );
 	mBar.setFillColor( sf::Color::Green );
+	mBar.setTextColor( sf::Color::Red );
+
+	mBar.setFont( mFont );
 
 	mBar.setPosition( ( mWindow.getDefaultView().getSize() / 2.f ) - sf::Vector2f( 200, 10 ) / 2.f );
 }
@@ -48,16 +52,7 @@ void Application::processInput()
 		if( ev.type == sf::Event::Closed )
 			mWindow.close();
 
-		switch( ev.type )
-		{
-		case sf::Event::KeyPressed:
-		{
-			if( ev.key.code == sf::Keyboard::Right )
-				mBar.increase( 0.10f );
-			else if ( ev.key.code == sf::Keyboard::Left )
-				mBar.increase( -0.10f );
-		}
-		}
+		handleEvents( ev );
 	}
 }
 
@@ -72,4 +67,27 @@ void Application::render()
 	mWindow.draw( mBar );
 
 	mWindow.display();
+}
+
+void Application::handleEvents( const sf::Event& ev )
+{
+	if( ev.type == sf::Event::KeyPressed )
+		switch( ev.key.code )
+		{
+		case sf::Keyboard::Right:
+			mBar.increase( 0.10f );
+			break;
+
+		case sf::Keyboard::Left:
+			mBar.increase( -0.10f );
+			break;
+
+		case sf::Keyboard::Num0:
+			mBar.setCompletion( 0.f );
+			break;
+
+		case sf::Keyboard::Num1:
+			mBar.setCompletion( 1.f );
+			break;
+		}
 }
